@@ -70,8 +70,8 @@ echo ""
 echo "Enter masternode private key for node $ALIAS"
 read PRIVKEY
 
-CONF_DIR=~/Bitradio/
-CONF_FILE=bitradio.conf
+CONF_DIR=~/.Bitradio/
+CONF_FILE=Bitradio.conf
 PORT=32454
 
 mkdir -p $CONF_DIR
