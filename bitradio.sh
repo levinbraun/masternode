@@ -33,6 +33,7 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo add-apt-repository  -y  ppa:bitcoin/bitcoin
   sudo apt-get update
   sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+  sudo apt-get install -y libgmp3-dev
 
   cd /var
   sudo touch swap.img
@@ -49,6 +50,10 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw limit ssh/tcp
   sudo ufw logging on
   echo "y" | sudo ufw enable
+  sudo ufw allow 32454
+  sudo ufw allow 32455
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 32454 -j ACCEPT
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 32455 -j ACCEPT
   sudo ufw status
 
   mkdir -p ~/bin
@@ -75,7 +80,7 @@ CONF_FILE=Bitradio.conf
 PORT=32454
 
 mkdir -p $CONF_DIR
-echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
+echo "rpcuser=Bitradiorpc" >> $CONF_DIR/$CONF_FILE
 echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
 echo "rpcallowip=127.0.0.1" >> $CONF_DIR/$CONF_FILE
 echo "listen=1" >> $CONF_DIR/$CONF_FILE
@@ -85,12 +90,14 @@ echo "logtimestamps=1" >> $CONF_DIR/$CONF_FILE
 echo "maxconnections=256" >> $CONF_DIR/$CONF_FILE
 echo "masternode=1" >> $CONF_DIR/$CONF_FILE
 echo "" >> $CONF_DIR/$CONF_FILE
-
 echo "" >> $CONF_DIR/$CONF_FILE
+echo "externalip=$IP" >> $CONF_DIR/$CONF_FILE
 echo "port=$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeaddr=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeprivkey=$PRIVKEY" >> $CONF_DIR/$CONF_FILE
 sudo ufw allow $PORT/tcp
 
-bitradiod -daemon
+sudo Bitradiod -daemonsudo 
+sudo Bitradiod masternode status
+
 
