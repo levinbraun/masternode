@@ -49,6 +49,10 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw limit ssh/tcp
   sudo ufw logging on
   echo "y" | sudo ufw enable
+  sudo ufw allow 7777
+  sudo ufw allow 7778
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 7777 -j ACCEPT
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 7778 -j ACCEPT
   sudo ufw status
 
   mkdir -p ~/bin
@@ -93,9 +97,10 @@ echo "addnode=80.208.227.101" >> $CONF_DIR/$CONF_FILE
 echo "addnode=185.92.223.139" >> $CONF_DIR/$CONF_FILE
 
 echo "" >> $CONF_DIR/$CONF_FILE
+echo "externalip=$IP" >> $CONF_DIR/$CONF_FILE
 echo "port=$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeaddr=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeprivkey=$PRIVKEY" >> $CONF_DIR/$CONF_FILE
 sudo ufw allow $PORT/tcp
 
-goacoind -daemon
+sudo goacoind -daemon
