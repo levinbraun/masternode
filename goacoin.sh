@@ -50,9 +50,9 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw logging on
   echo "y" | sudo ufw enable
   sudo ufw allow 1947/tcp
-  sudo ufw allow 99914/tcp
+  sudo ufw allow 1948/tcp
   sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1947 -j ACCEPT
-  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 99914 -j ACCEPT
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1948 -j ACCEPT
   sudo ufw status
 
   mkdir -p ~/bin
@@ -80,7 +80,7 @@ PORT=1947
 mkdir -p $CONF_DIR
 echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
 echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
-echo "rpcport=99914" >> $CONF_DIR/$CONF_FILE
+echo "rpcport=1948" >> $CONF_DIR/$CONF_FILE
 echo "rpcallowip=127.0.0.1" >> $CONF_DIR/$CONF_FILE
 echo "listen=1" >> $CONF_DIR/$CONF_FILE
 echo "server=1" >> $CONF_DIR/$CONF_FILE
