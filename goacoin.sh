@@ -59,6 +59,11 @@ if [[ $DOSETUP =~ "y" ]] ; then
   echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
   source ~/.bashrc
 fi
+git clone https://github.com/goacoincore/goacoin.git
+cd goacoin
+./autogen.sh
+./configure
+make
 
 wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-qt-0.12.1.9-linux64.tar.gz
 tar -xzf goacoin-qt-*.tar.gz
