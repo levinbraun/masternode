@@ -49,8 +49,8 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw limit ssh/tcp
   sudo ufw logging on
   echo "y" | sudo ufw enable
-  sudo ufw allow 1947
-  sudo ufw allow 99914
+  sudo ufw allow 1947/tcp
+  sudo ufw allow 99914/tcp
   sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1947 -j ACCEPT
   sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 99914 -j ACCEPT
   sudo ufw status
@@ -80,6 +80,7 @@ PORT=1947
 mkdir -p $CONF_DIR
 echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
 echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
+echo "rpcport=99914" >> $CONF_DIR/$CONF_FILE
 echo "rpcallowip=127.0.0.1" >> $CONF_DIR/$CONF_FILE
 echo "listen=1" >> $CONF_DIR/$CONF_FILE
 echo "server=1" >> $CONF_DIR/$CONF_FILE
@@ -87,15 +88,6 @@ echo "daemon=1" >> $CONF_DIR/$CONF_FILE
 echo "logtimestamps=1" >> $CONF_DIR/$CONF_FILE
 echo "maxconnections=256" >> $CONF_DIR/$CONF_FILE
 echo "masternode=1" >> $CONF_DIR/$CONF_FILE
-echo "" >> $CONF_DIR/$CONF_FILE
-
-echo "addnode=54.37.74.53" >> $CONF_DIR/$CONF_FILE
-echo "addnode=207.148.66.170" >> $CONF_DIR/$CONF_FILE
-echo "addnode=142.208.122.127" >> $CONF_DIR/$CONF_FILE
-echo "addnode=45.76.190.44" >> $CONF_DIR/$CONF_FILE
-echo "addnode=80.208.227.101" >> $CONF_DIR/$CONF_FILE
-echo "addnode=185.92.223.139" >> $CONF_DIR/$CONF_FILE
-
 echo "" >> $CONF_DIR/$CONF_FILE
 echo "externalip=$IP" >> $CONF_DIR/$CONF_FILE
 echo "port=$PORT" >> $CONF_DIR/$CONF_FILE
