@@ -49,10 +49,10 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw limit ssh/tcp
   sudo ufw logging on
   echo "y" | sudo ufw enable
-  sudo ufw allow 7777
-  sudo ufw allow 7778
-  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 7777 -j ACCEPT
-  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 7778 -j ACCEPT
+  sudo ufw allow 1947
+  sudo ufw allow 99914
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1947 -j ACCEPT
+  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 99914 -j ACCEPT
   sudo ufw status
 
   mkdir -p ~/bin
