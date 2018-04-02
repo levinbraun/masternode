@@ -60,9 +60,9 @@ if [[ $DOSETUP =~ "y" ]] ; then
   source ~/.bashrc
 fi
 
-wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-daemon-0.12.1.9-linux64.tar.gz
-tar -xzf goacoin-daemon-*.tar.gz
-sudo mv  goacoin-daemon-*/bin/* /usr/bin
+wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-qt-0.12.1.9-linux64.tar.gz
+tar -xzf goacoin-qt-*.tar.gz
+sudo mv  goacoin-qt-*/bin/* /usr/bin
 
 echo ""
 echo "Configure your masternodes now!"
