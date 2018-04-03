@@ -64,10 +64,11 @@ cd goacoin
 ./autogen.sh
 ./configure
 make
-
-wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-qt-0.12.1.9-linux64.tar.gz
-tar -xzf goacoin-qt-*.tar.gz
-sudo mv  goacoin-qt-*/bin/* /usr/bin
+wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-daemon-0.12.1.9-linux64.tar.gz
+tar -xzf goacoin-daemon-*.tar.gz
+cd .goacoincore
+sudo mv goacoind /usr/bin
+sudo mv goacoin-cli /usr/bin
 
 echo ""
 echo "Configure your masternodes now!"
@@ -83,8 +84,8 @@ CONF_FILE=goacoin.conf
 PORT=1947
 
 mkdir -p $CONF_DIR
-echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
-echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> $CONF_DIR/$CONF_FILE
+echo "rpcuser=goacoin" >> $CONF_DIR/$CONF_FILE
+echo "rpcpassword=1qa2ws3ed4r" >> $CONF_DIR/$CONF_FILE
 echo "rpcport=1948" >> $CONF_DIR/$CONF_FILE
 echo "rpcallowip=127.0.0.1" >> $CONF_DIR/$CONF_FILE
 echo "listen=1" >> $CONF_DIR/$CONF_FILE
