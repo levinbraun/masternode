@@ -15,6 +15,22 @@ echo "!                                                 !"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo && echo && echo
 
+free -h
+#that will just show what you currenty have
+
+#now setup the swap:
+sudo fallocate -l 4G /swapfile
+ls -lh /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+#Make Changes Permanent
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+sudo bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
+
+#Confirm Changes, you should now see a second line different that before, showing the 4G swap has been setup
+free -h
+
 echo "Do you want to install all needed dependencies (no if you did it before)? [y/n]"
 read DOSETUP
 
@@ -60,11 +76,19 @@ if [[ $DOSETUP =~ "y" ]] ; then
   source ~/.bashrc
 fi
 
-wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-daemon-0.12.1.9-linux64.tar.gz
-tar -xzf goacoin-daemon-*.tar.gz
-cd .goacoincore
-sudo mv goacoind /usr/bin
-sudo mv goacoin-cli /usr/bin
+#wget https://github.com/goacoincore/goacoin/releases/download/v0.12.1.9/goacoin-daemon-0.12.1.9-linux64.tar.gz
+#tar -xzf goacoin-daemon-*.tar.gz
+#cd .goacoincore
+#sudo mv goacoind /usr/bin
+#sudo mv goacoin-cli /usr/bin
+
+git clone https://github.com/goacoincore/goacoin.git
+cd goacoin
+chmod 755 autogen.sh 
+./autogen.sh
+./configure
+chmod 755 share/genbuild.sh
+make
 
 echo ""
 echo "Configure your masternodes now!"
