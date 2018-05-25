@@ -19,42 +19,42 @@ echo "Do you want to install all needed dependencies (no if you did it before)? 
 read DOSETUP
 
 if [[ $DOSETUP =~ "y" ]] ; then
-  sudo apt-get update
-  sudo apt-get -y upgrade
-  sudo apt-get -y dist-upgrade
-  sudo apt-get install -y nano htop git
-  sudo apt-get install -y software-properties-common
-  sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev
-  sudo apt-get install -y libboost-all-dev
-  sudo apt-get install -y libevent-dev
-  sudo apt-get install -y libminiupnpc-dev
-  sudo apt-get install -y autoconf
-  sudo apt-get install -y automake unzip
-  sudo add-apt-repository  -y  ppa:bitcoin/bitcoin
-  sudo apt-get update
-  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
-  sudo apt-get install -y libgmp3-dev
+  apt-get update
+  apt-get -y upgrade
+  apt-get -y dist-upgrade
+  apt-get install -y nano htop git
+  apt-get install -y software-properties-common
+  apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev
+  apt-get install -y libboost-all-dev
+  apt-get install -y libevent-dev
+  apt-get install -y libminiupnpc-dev
+  apt-get install -y autoconf
+  apt-get install -y automake unzip
+  add-apt-repository  -y  ppa:bitcoin/bitcoin
+  apt-get update
+  apt-get install -y libdb4.8-dev libdb4.8++-dev
+  apt-get install -y libgmp3-dev
 
   cd /var
-  sudo touch swap.img
-  sudo chmod 600 swap.img
-  sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
-  sudo mkswap /var/swap.img
-  sudo swapon /var/swap.img
-  sudo free
-  sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
+  touch swap.img
+  chmod 600 swap.img
+  dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
+  mkswap /var/swap.img
+  swapon /var/swap.img
+  free
+  echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
   cd
 
-  sudo apt-get install -y ufw
-  sudo ufw allow ssh/tcp
-  sudo ufw limit ssh/tcp
-  sudo ufw logging on
+  apt-get install -y ufw
+  ufw allow ssh/tcp
+  ufw limit ssh/tcp
+  ufw logging on
   echo "y" | sudo ufw enable
-  sudo ufw allow 32454
-  sudo ufw allow 32455
-  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 32454 -j ACCEPT
-  sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 32455 -j ACCEPT
-  sudo ufw status
+  ufw allow 32454
+  ufw allow 32455
+  iptables -t filter -A INPUT -i eth0 -p tcp --dport 32454 -j ACCEPT
+  iptables -t filter -A INPUT -i eth0 -p tcp --dport 32455 -j ACCEPT
+  ufw status
 
   mkdir -p ~/bin
   echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
@@ -64,7 +64,7 @@ git clone https://github.com/thebitradio/Bitradio
 cd Bitradio/src
 make -f makefile.unix # Headless
 strip Bitradiod
-sudo cp Bitradiod /usr/local/bin
+cp Bitradiod /usr/local/bin
 
 echo ""
 echo "Configure your masternodes now!"
@@ -97,7 +97,7 @@ echo "masternodeaddr=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeprivkey=$PRIVKEY" >> $CONF_DIR/$CONF_FILE
 sudo ufw allow $PORT/tcp
 
-sudo Bitradiod -daemonsudo 
-sudo Bitradiod masternode status
+Bitradiod -daemon 
+Bitradiod masternode status
 
 
