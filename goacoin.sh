@@ -66,7 +66,7 @@ if [[ $DOSETUP =~ "y" ]] ; then
   sudo ufw logging on
   echo "y" | sudo ufw enable
   sudo ufw allow 1947/tcp
-  sudo ufw allow 1948/tcp
+  sudo ufw allow 10024/tcp
   sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1947 -j ACCEPT
   sudo iptables -t filter -A INPUT -i eth0 -p tcp --dport 1948 -j ACCEPT
   sudo ufw status
@@ -89,6 +89,9 @@ chmod 755 autogen.sh
 ./configure
 chmod 755 share/genbuild.sh
 make
+chmod +x goacoin/src/goacoind
+cp goacoin/src/goacoind /usr/local/bin/
+cp goacoin/src/goacoin-cli /usr/local/bin/
 
 echo ""
 echo "Configure your masternodes now!"
@@ -106,19 +109,19 @@ PORT=1947
 mkdir -p $CONF_DIR
 echo "rpcuser=goacoin" >> $CONF_DIR/$CONF_FILE
 echo "rpcpassword=1qa2ws3ed4r" >> $CONF_DIR/$CONF_FILE
-echo "rpcport=1948" >> $CONF_DIR/$CONF_FILE
-echo "rpcallowip=127.0.0.1" >> $CONF_DIR/$CONF_FILE
+echo "rpcport=10024" >> $CONF_DIR/$CONF_FILE
+echo "port=$PORT" >> $CONF_DIR/$CONF_FILE
+echo "masternode=1" >> $CONF_DIR/$CONF_FILE
 echo "listen=1" >> $CONF_DIR/$CONF_FILE
+echo "staking=0" >> $CONF_DIR/$CONF_FILE
+echo "discover=1" >> $CONF_DIR/$CONF_FILE
 echo "server=1" >> $CONF_DIR/$CONF_FILE
 echo "daemon=1" >> $CONF_DIR/$CONF_FILE
 echo "logtimestamps=1" >> $CONF_DIR/$CONF_FILE
 echo "maxconnections=256" >> $CONF_DIR/$CONF_FILE
-echo "masternode=1" >> $CONF_DIR/$CONF_FILE
+
 echo "" >> $CONF_DIR/$CONF_FILE
-echo "externalip=$IP" >> $CONF_DIR/$CONF_FILE
-echo "port=$PORT" >> $CONF_DIR/$CONF_FILE
-echo "masternodeaddr=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
+echo "externalip=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeprivkey=$PRIVKEY" >> $CONF_DIR/$CONF_FILE
-sudo ufw allow $PORT/tcp
 
 sudo goacoind -daemon
