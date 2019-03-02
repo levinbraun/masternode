@@ -118,4 +118,4 @@ echo "" >> $CONF_DIR/$CONF_FILE
 echo "externalip=$IP:$PORT" >> $CONF_DIR/$CONF_FILE
 echo "masternodeprivkey=$PRIVKEY" >> $CONF_DIR/$CONF_FILE
 
-sibcoind &
+sudo sibcoind -daemon
